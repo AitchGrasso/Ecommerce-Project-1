@@ -1,4 +1,4 @@
-# Contributing to TechTonic - An ecommerce Template
+# Contributing to TechTonic - Ecommerce Template
 
 This README provides a step-by-step guide on how we organize this project using GitHub, where multiple contributors can work on the same project without overwriting each other's changes. This approach involves forking your own repository and working on separate branches. 
 
