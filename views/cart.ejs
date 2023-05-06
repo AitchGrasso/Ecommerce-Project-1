@@ -10,9 +10,9 @@
 <body>
     <h1>TO DO LIST</h1>
     <ul>
-    <% todos.forEach( el => { %>
-            <li class='todoItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
+    <% cart.forEach( el => { %>
+            <li class='cartItem' data-id='<%=el._id%>'>
+                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.cart %></span>
                 <span class='del'> Delete </span>
             </li>
     <% }) %>    
@@ -20,8 +20,8 @@
 
     <h2><%= user.userName %> has <%= left %> things left to do.</h2>
 
-    <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
+    <form action="/cart/createCart" method='POST'>
+        <input type="text" placeholder="Enter Cart Item" name='cartItem'>
         <input type="submit">
     </form>
 

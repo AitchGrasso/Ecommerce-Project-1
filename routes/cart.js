@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const todosController = require('../controllers/todos') 
+const cartController = require('../controllers/cart') 
 const { ensureAuth } = require('../middleware/auth')
 
-router.get('/', ensureAuth, todosController.getTodos)
+router.get('/', ensureAuth, cartController.getCart)
 
-router.post('/createTodo', todosController.createTodo)
+router.post('/createCart', cartController.createCart)
 
-router.put('/markComplete', todosController.markComplete)
+router.put('/markComplete', cartController.markComplete)
 
-router.put('/markIncomplete', todosController.markIncomplete)
+router.put('/markIncomplete', cartController.markIncomplete)
 
-router.delete('/deleteTodo', todosController.deleteTodo)
+router.delete('/deleteCart', cartController.deleteCart)
 
 module.exports = router
 
