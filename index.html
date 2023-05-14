@@ -17,29 +17,39 @@
 
 </head>
 <body>
-    
+    <%- include('partials/header'); %>  
+    <!-- TODO: numCartItems not working  -->
 
+<!-- Deals Section -->
 
-<!-- <section class= "top-nav">
-    <nav>
-        <ul class="nav-links">
-            <li><a href="#">Home</li>
-            <li><a href="#">About Us</li>
-            <li><a href="#">Contact Us</li>
-            <li><a href="#">Blog</li>
-        </ul>
-    </nav>
+    <section class="home" id="home">
+        <div class="content">
+            <span>Digital Deals</span>
+            <h3>Laptops<br>Up to 50% off</h3>
+            <a href="/products" class="btn">shop now</a>
+        </div>
+        <div class="image">
+            <img src="images/laptop1.png" alt="">
+        </div>
+    </section>
 
-    <div class="cta">Questions? Call Us <a href="tel:555.555.5555">555.555.5555</a></div>
-    
-</section> -->
+<!-- category section  -->
 
-<!-- top nav section ends  -->
+    <section class="category">
 
-<!-- header section starts  -->
+        <h1 class="heading"> shop by <span>category</span> </h1>
 
-<header>
+        <div class="box-container">
 
+<<<<<<< HEAD:views/index.ejs
+            <div class="box">
+                <img src="images/games.jpeg" alt="">
+                <div class="content">
+                    <span>upto 50% off</span>
+                    <h3>Gaming</h3>
+                    <a href="/products" class="btn">shop now</a>
+                </div>
+=======
     <a href="#" class="logo">TechTonic<span>.</span></a>
 
     <form action="">
@@ -115,37 +125,37 @@
                 <span>upto 50% off</span>
                 <h3>Gaming</h3>
                 <a href="#" class="btn">shop now</a>
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3:index.html
             </div>
+
+            <div class="box">
+                <img src="images/computers.png" alt="">
+                <div class="content">
+                    <span>upto 50% off</span>
+                    <h3>PC & Laptops</h3>
+                    <a href="/products" class="btn">shop now</a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="images/tvSize.jpeg " alt="">
+                <div class="content">
+                    <span>upto 50% off</span>
+                    <h3>TV & Home Theater</h3>
+                    <a href="/products" class="btn">shop now</a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="images/cat-2.jpg" alt="">
+                <div class="content">
+                    <span>upto 50% off</span>
+                    <h3>for mans</h3>
+                    <a href="/products" class="btn">shop now</a>
+                </div>
+            </div>
+            
         </div>
 
-        <div class="box">
-            <img src="images/computers.png" alt="">
-            <div class="content">
-                <span>upto 50% off</span>
-                <h3>PC & Laptops</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-        <div class="box">
-            <img src="images/tvSize.jpeg " alt="">
-            <div class="content">
-                <span>upto 50% off</span>
-                <h3>TV & Home Theater</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-        <div class="box">
-            <img src="images/cat-2.jpg" alt="">
-            <div class="content">
-                <span>upto 50% off</span>
-                <h3>for mans</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-        
-    </div>
-
-</section>
+    </section>
 
 
 <!-- featured section starts  -->
@@ -206,7 +216,7 @@
                 </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora quasi nesciunt, error fuga facilis autem rerum cumque animi rem natus.</p>
                 <div class="price">$15.99 <span>$18.99</span></div>
-                <a href="#" class="btn">add to cart</a>
+                <a href="/products" class="btn">add to cart</a>
             </div>
         </div>
 
@@ -340,21 +350,21 @@
 
     <div class="box-container">
 
-        <!-- <div class="box">
+        <div class="box">
             <h3>quick links</h3>
-            <a href="#">home</a>
-            <a href="#">products</a>
-            <a href="#">featured</a>
-            <a href="#">deal</a>
+            <a href="/">home</a>
+            <a href="/products">products</a>
+            <a href="/products">featured</a>
+            <a href="/products">deal</a>
             <a href="#">review</a>
         </div>
 
         <div class="box">
             <h3>extra links</h3>
-            <a href="#">my account</a>
-            <a href="#">my favorite</a>
-            <a href="#">my order</a>
-            <a href="#">my cart</a>
+            <a href="/account">my account</a>
+            <a href="/accout/favorites">my favorite</a>
+            <a href="/cart">my order</a>
+            <a href="/cart">my cart</a>
         </div>
 
         <div class="box">
@@ -362,7 +372,7 @@
             <a href="#">windows store</a>
             <a href="#">app store</a>
             <a href="#">google store</a>
-        </div> -->
+        </div>
 
         <div class="box">
             <h3>contact us</h3>

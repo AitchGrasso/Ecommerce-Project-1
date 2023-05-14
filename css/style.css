@@ -205,7 +205,11 @@ header .icons div:hover,
 header .icons a:hover{
     background: var(--orange);
     color:#fff;
+<<<<<<< HEAD
+    transform: rotate(360deg);
+=======
     
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
 }
 
 header.active{
@@ -214,6 +218,31 @@ header.active{
     z-index: 100;
 }
 
+<<<<<<< HEAD
+=======
+
+header .header-checkout[data-num-items].pulse-number::after {
+	min-width: 36px;
+	min-height: 36px;
+}
+
+header .header-checkout[data-num-items]::after {
+	content: attr(data-num-items);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	right: -6px;
+	top: -6px;
+	min-width: 24px;
+	min-height: 24px;
+	border-radius: 9999px;
+	background-color: #de1b57;
+	color: white;
+	transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
 /* navbar */
 
 @media only screen and (min-width: 800px) {
@@ -345,7 +374,11 @@ header.active{
 
 
 .home{
+<<<<<<< HEAD
+    min-height: 90vh;
+=======
     min-height: 20vh;
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
     display: flex;
     align-items: center;
     flex-wrap: wrap-reverse;
@@ -357,7 +390,10 @@ header.active{
 
 .home .content{
     flex:1 1 40rem;
+<<<<<<< HEAD
+=======
     
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
 }
 
 .home .image{
@@ -378,7 +414,10 @@ header.active{
     color:var(--black-color);
     font-size: 8rem;
     text-transform: uppercase;
+<<<<<<< HEAD
+=======
     
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
 }
 
 .category .box-container{
@@ -391,7 +430,10 @@ header.active{
     height: 30rem;
     flex:1 1 40rem;
     border-radius: .5rem;
+<<<<<<< HEAD
+=======
     display: flex;
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
     position: relative;
     overflow:hidden;
 }
@@ -408,7 +450,11 @@ header.active{
 
 .category .box-container .content{
     position: absolute;
+<<<<<<< HEAD
+    bottom: 7rem; left:2rem;
+=======
     bottom: 1rem; left:1rem;
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
 }
 
 .category .box-container .content span{
@@ -418,9 +464,13 @@ header.active{
 
 .category .box-container .content h3{
     font-size: 3rem;
+<<<<<<< HEAD
+    color:#3337;
+=======
     color:rgb(123, 121, 121);
    
     
+>>>>>>> cf7e9fabff8b20f6b613ef970382d120e28a1ab3
     text-transform: uppercase;
     padding-top: .5rem;
 }
