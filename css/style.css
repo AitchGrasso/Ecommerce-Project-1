@@ -205,35 +205,13 @@ header .icons div:hover,
 header .icons a:hover{
     background: var(--orange);
     color:#fff;
-    
+    transform: rotate(360deg);
 }
 
 header.active{
     position: fixed;
     top:0; left: 0;
     z-index: 100;
-}
-
-
-header .header-checkout[data-num-items].pulse-number::after {
-	min-width: 36px;
-	min-height: 36px;
-}
-
-header .header-checkout[data-num-items]::after {
-	content: attr(data-num-items);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	right: -6px;
-	top: -6px;
-	min-width: 24px;
-	min-height: 24px;
-	border-radius: 9999px;
-	background-color: #de1b57;
-	color: white;
-	transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 /* navbar */
@@ -367,7 +345,7 @@ header .header-checkout[data-num-items]::after {
 
 
 .home{
-    min-height: 20vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     flex-wrap: wrap-reverse;
@@ -379,7 +357,6 @@ header .header-checkout[data-num-items]::after {
 
 .home .content{
     flex:1 1 40rem;
-    
 }
 
 .home .image{
@@ -400,7 +377,6 @@ header .header-checkout[data-num-items]::after {
     color:var(--black-color);
     font-size: 8rem;
     text-transform: uppercase;
-    
 }
 
 .category .box-container{
@@ -413,7 +389,6 @@ header .header-checkout[data-num-items]::after {
     height: 30rem;
     flex:1 1 40rem;
     border-radius: .5rem;
-    display: flex;
     position: relative;
     overflow:hidden;
 }
@@ -430,7 +405,7 @@ header .header-checkout[data-num-items]::after {
 
 .category .box-container .content{
     position: absolute;
-    bottom: 1rem; left:1rem;
+    bottom: 7rem; left:2rem;
 }
 
 .category .box-container .content span{
@@ -440,9 +415,7 @@ header .header-checkout[data-num-items]::after {
 
 .category .box-container .content h3{
     font-size: 3rem;
-    color:rgb(123, 121, 121);
-   
-    
+    color:#3337;
     text-transform: uppercase;
     padding-top: .5rem;
 }

@@ -9,60 +9,271 @@ const logger = require('morgan')
 const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
 const cartRoutes = require('./routes/cart')
-const stripe = require('stripe')('sk_test_51MepbbACob0kXxS0LOl8x3By9YVUXSP3n69QT4uCxfatIrpBJsyDUNSq1qtRXrW3vXXTrsZNNKqYXaWidn1DgMHZ00hWHUVQu4');
-
-const YOUR_DOMAIN = 'http://localhost:8000';
-
-
 require('dotenv').config({path: './config/.env'})
+const stripe = require('stripe')(process.env.STRIPE_API_KEY);
+const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT_KEY;
+const ejs = require('ejs');
 
 // Passport config
 require('./config/passport')(passport)
 
+// Connect to Database
 connectDB()
 
+// Using EJS for views
 app.set('view engine', 'ejs')
+
+// Using HTML for views
+app.set('view engine', 'html');
+
+//TODO: ???
+app.engine('html', ejs.renderFile);
+
+// Static Folder, css, js files
 app.use(express.static('public'))
+
+// Body Parsing
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+// Logging
 app.use(logger('dev'))
-// Sessions
+
+// Session Setup - stored in MongoDB
 app.use(
     session({
       secret: 'keyboard cat',
       resave: false,
       saveUninitialized: false,
-      store: MongoStore.create({ mongoUrl: 'mongodb+srv://H:0wbHrzHVOFDRgG1J@techton.rhyn3i2.mongodb.net/?retryWrites=true&w=majority' }),
+      store: MongoStore.create({ mongoUrl: process.env.DB_STRING}),
     })
 );
   
-// Passport middleware
+// Passport Middleware
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Use flash messages for errors, info, ect...
 app.use(flash())
-  
+
+// Setup Routes For Which The Server Is Listening
 app.use('/', mainRoutes)
-app.use('/cart', cartRoutes)
+app.use('/cart', cartRoutes) //TODO cart route is not needed?
 
-app.post('/create-checkout-session', async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: `${YOUR_DOMAIN}/success.html`,
-    cancel_url: `${YOUR_DOMAIN}/cancel.html`,
-  });
+///////////////////////////////////////////////////////////////////////////////
+// Products available for sale (loads from stripe on server startup).
+///////////////////////////////////////////////////////////////////////////////
+const products = [];
 
-  res.redirect(303, session.url);
+///////////////////////////////////////////////////////////////////////////////
+// User Cart
+///////////////////////////////////////////////////////////////////////////////
+const userCart = [];
+
+///////////////////////////////////////////////////////////////////////////////
+// Helper Functions
+///////////////////////////////////////////////////////////////////////////////
+async function getProducts() {
+	const products = await stripe.products.list({
+		expand: ['data.default_price'],
+	});
+	return products.data;
+}
+
+function getNumUserItems() {
+	if (userCart.length === 0) return 0;
+	return userCart.reduce((acc, cur) => acc + cur.quantity, 0);
+}
+
+async function fulfillOrder(session) {
+	const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+		session.id, {
+			expand: ['line_items'],
+		}
+	);
+	const lineItems = sessionWithLineItems.line_items;
+	console.log("/////////////////////////////////////////////////////")
+	console.log("// Fulfill Order                                   //");
+	console.log("/////////////////////////////////////////////////////")
+	console.log(lineItems);
+	console.log('\r\n');
+}
+
+async function createOrder(session) {
+	console.log("/////////////////////////////////////////////////////")
+	console.log("// Create Order                                    //");
+	console.log("/////////////////////////////////////////////////////")
+	console.log('\r\n');
+}
+
+async function sendFailedPaymentEmail(session) {
+	console.log("/////////////////////////////////////////////////////")
+	console.log("// FAILED PAYMENT - Email Customer                 //");
+	console.log("/////////////////////////////////////////////////////")
+	console.log('\r\n');
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Routes
+///////////////////////////////////////////////////////////////////////////////
+app.get('/', async (req, res) => {
+	res.render('index.ejs', { products, numCartItems: getNumUserItems() });
 });
 
+app.get('/products', async (req, res) => {
+	res.render('products.ejs', { products, numCartItems: getNumUserItems() });
+});
 
-app.listen(process.env.PORT, ()=>{
-    console.log(`Server is running on PORT ${process.env.PORT}, you better catch it!`)
-})    
+// User checkout page
+app.get('/checkout', (req, res) => {
+	res.render('checkout.ejs', { userCart, numCartItems: getNumUserItems() });
+})
+
+// API call to add an item to cart
+app.get('/api/add/:id', (req, res) => {
+	// check if user already has one in cart.
+	const cartIndex = userCart.findIndex(
+		item => item.id === req.params.id
+	);
+
+	// user has item in cart already, increase qty.
+	if (cartIndex > -1) {
+		userCart[cartIndex].quantity++;
+		return res.json({
+			code: 300,
+			message: 'Item added to cart',
+		})
+	}
+
+	// user does not have this item in their cart yet.
+	const item = products.find(item => item.id === req.params.id);
+	if (item) {
+		userCart.push({ ...item, quantity: 1});
+		return res.json({
+			code: 300,
+			message: 'Item added to cart',
+		})
+	}
+
+	// invalid ID.
+	return res.json({
+		code: 404,
+		message: 'Incorrect item ID',
+	})
+})
+
+// POST request to start Stripe checkout.
+app.post('/stripe-checkout', async(req, res) => {
+	const session = await stripe.checkout.sessions.create({
+		line_items: [
+			...userCart.map(item => {
+				return {
+					price: item.default_price.id,
+					quantity: item.quantity
+				}
+			})
+		],
+		// One-time payment, not recurring.
+		mode: 'payment',
+		// URL customer redirects to upon successful payment.
+		success_url: 'http://localhost:8000/payment_success',
+		// URL customer redirects to when they cancel checkout.
+		cancel_url: 'http://localhost:8000/',
+	});
+
+	// Go to stripe
+	res.redirect(303, session.url);
+});
+
+// Page customer will see after paying.
+app.get('/payment_success', async(req, res) => {
+	userCart.length = 0;
+	return res.render('payment_success.ejs');
+})
+
+// Webhook that's called after customer payment.
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+	const payload = req.body;
+	const sig = req.headers['stripe-signature'];
+
+	// Verify the call was from Stripe usign the endpoint secret API key.
+	let event;
+	try {
+		event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+	} catch (err) {
+		console.error(err);
+		res.status(400).send(`Webhook Error: ${err.message}`);
+		return;
+	}
+
+	// Handle all payment events.
+	switch (event.type) {
+		// Checkout has been successfully completed.
+		case 'checkout.session.completed': {
+			console.log("/////////////////////////////////////////////////////")
+			console.log("// Event: checkout.session.completed               //");
+			console.log("/////////////////////////////////////////////////////")
+			console.log('\r\n');
+
+			const session = event.data.object;
+
+			// Create an order in the database that is marked as waiting for payment,
+			// since the payment may be delayed due to various factors.
+			createOrder(session);
+
+			// If the order is paid, fulfill it. If it's pending, don't.
+			if (session.payment_status === 'paid') {
+				fulfillOrder(session);
+			}
+			break;
+		}
+
+		// A delayed payment has finally succeeded.
+		case 'checkout.session.async_payment_succeeded': {
+			console.log("/////////////////////////////////////////////////////")
+			console.log("// Event: checkout.session.async_payment_succeeded //");
+			console.log("/////////////////////////////////////////////////////")
+			console.log('\r\n');
+
+			const session = event.data.object;
+			fulfillOrder(session);
+			break;
+		}
+
+		// A delayed payment has failed.
+		case 'checkout.session.async_payment_failed': {
+			console.log("/////////////////////////////////////////////////////")
+			console.log("// Event: checkout.session.async_payment_failed    //");
+			console.log("/////////////////////////////////////////////////////")
+			console.log('\r\n');
+
+			const session = event.data.object;
+			sendFailedPaymentEmail(session);
+			break;;
+		}
+
+		default: {
+			console.log("/////////////////////////////////////////////////////")
+			console.log("// Unhandled Event                                 //");
+			console.log("/////////////////////////////////////////////////////")
+			console.log(`${event.type}\r\n`);
+		}
+	}
+
+	res.status(200).send();
+})
+
+// Run server.
+app.listen(process.env.PORT, () => {
+	// Load products from stripe.
+	getProducts().then(items => products.push(...items));
+
+	console.log(`Server is running on PORT ${process.env.PORT}, you better catch it!`)
+});
+
+//////////////////////////STRIPE CHANGES
+
+
+// app.listen(process.env.PORT, ()=>{
+//     console.log(`Server is running on PORT ${process.env.PORT}, you better catch it!`)
+// })    
