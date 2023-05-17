@@ -8,6 +8,48 @@ document.querySelector('#close').onclick = () =>{
     navbar.classList.remove('active');
 }
 
+function fetchProducts(){
+    fetch('https://fakestoreapi.com/products/category/electronics?limit=3%27')
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data)
+
+        data.forEach((obj, index) => {
+
+            const {
+                title,
+                price,
+                description,
+                image
+            } = obj
+
+            const titles = document.querySelectorAll('.content-title')
+            titles[index].innerText = title
+
+            console.log(titles)
+        
+            // const images = document.querySelectorAll('.big-image img')
+            // images[index].src = price
+
+            // const images = document.querySelectorAll('.big-image img')
+            // images[index].src = description
+
+            const images = document.querySelectorAll('.big-image img')
+            images[index].src = image  //change class to something more specific
+
+        })
+
+
+    })
+    .catch(err => {
+        console.log(`error ${err}`)
+    });
+}
+
+window.onload = () => {
+    fetchProducts()
+}
+
 window.onscroll = () =>{
 
     navbar.classList.remove('active');
@@ -31,47 +73,47 @@ themeToggler.onclick = () =>{
     }
 }
 
-document.querySelectorAll('.small-image-1').forEach(images =>{
-    images.onclick = () =>{
-        document.querySelector('.big-image-1').src = images.getAttribute('src');
-    }
-});
+// document.querySelectorAll('.small-image-1').forEach(images =>{
+//     images.onclick = () =>{
+//         document.querySelector('.big-image-1').src = images.getAttribute('src');
+//     }
+// });
 
-document.querySelectorAll('.small-image-2').forEach(images =>{
-    images.onclick = () =>{
-        document.querySelector('.big-image-2').src = images.getAttribute('src');
-    }
-});
+// document.querySelectorAll('.small-image-2').forEach(images =>{
+//     images.onclick = () =>{
+//         document.querySelector('.big-image-2').src = images.getAttribute('src');
+//     }
+// });
 
-document.querySelectorAll('.small-image-3').forEach(images =>{
-    images.onclick = () =>{
-        document.querySelector('.big-image-3').src = images.getAttribute('src');
-    }
-});
+// document.querySelectorAll('.small-image-3').forEach(images =>{
+//     images.onclick = () =>{
+//         document.querySelector('.big-image-3').src = images.getAttribute('src');
+//     }
+// });
 
-let countDate = new Date('aug 1, 2021 00:00:00').getTime();
+// let countDate = new Date('aug 1, 2021 00:00:00').getTime();
 
-function countDown(){
+// function countDown(){
 
-    let now = new Date().getTime();
-	gap = countDate - now;
+//     let now = new Date().getTime();
+// 	gap = countDate - now;
 
-    let seconds = 1000;
-    let minutes = seconds * 60;
-    let hours = minutes * 60;
-    let days = hours * 24;
+//     let seconds = 1000;
+//     let minutes = seconds * 60;
+//     let hours = minutes * 60;
+//     let days = hours * 24;
 
-    let d = Math.floor(gap / (days));
-	let h = Math.floor((gap % (days)) / (hours));
-	let m = Math.floor((gap % (hours)) / (minutes));
-	let s = Math.floor((gap % (minutes)) / (seconds));
+//     let d = Math.floor(gap / (days));
+// 	let h = Math.floor((gap % (days)) / (hours));
+// 	let m = Math.floor((gap % (hours)) / (minutes));
+// 	let s = Math.floor((gap % (minutes)) / (seconds));
 
-    document.getElementById('days').innerText = d;
-    document.getElementById('hours').innerText = h;
-    document.getElementById('minutes').innerText = m;
-    document.getElementById('seconds').innerText = s;
+//     document.getElementById('days').innerText = d;
+//     document.getElementById('hours').innerText = h;
+//     document.getElementById('minutes').innerText = m;
+//     document.getElementById('seconds').innerText = s;
 
-}
+// }
 
 setInterval(function(){
     countDown()
