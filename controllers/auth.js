@@ -4,12 +4,14 @@ const User = require('../models/User')
 
  exports.getLogin = (req, res) => {
     if (req.user) {
-      return res.redirect('/cart')
+      return res.redirect('/checkout')
     }
-    res.render('login', {
-      title: 'Login'
-    })
+    // res.render('login', {
+    //   title: 'Login'
+    // })
+    res.render('login.ejs')
   }
+
   
   exports.postLogin = (req, res, next) => {
     const validationErrors = []
