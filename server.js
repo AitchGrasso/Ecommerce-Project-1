@@ -68,7 +68,6 @@ app.use(flash())
 
 // Setup Routes For Which The Server Is Listening
 app.use('/', mainRoutes)
-app.use('/login', loginRoutes)
 app.use('/cart', cartRoutes)
 
 ///////////////////////////////////////////////////////////////////////////////
