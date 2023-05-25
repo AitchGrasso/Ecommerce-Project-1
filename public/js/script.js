@@ -1,5 +1,7 @@
 let navbar = document.querySelector('.navbar')
 
+fetchProducts()
+
 document.querySelector('#menu-bar').onclick = () =>{
     navbar.classList.toggle('active');
 }
@@ -8,43 +10,40 @@ document.querySelector('#close').onclick = () =>{
     navbar.classList.remove('active');
 }
 
-function fetchProducts(){
-    fetch('https://fakestoreapi.com/products/category/electronics?limit=3%27')
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data)
+function fetchProducts() {
+    fetch('https://fakestoreapi.com/products/category/electronics?limit=3')
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
 
-        data.forEach((obj, index) => {
+            data.forEach((obj, index) => {
+                let {
+                    title,
+                    price,
+                    description,
+                    image
+                } = obj;
 
-            const {
-                title,
-                price,
-                description,
-                image
-            } = obj
+                let titles = document.querySelectorAll('.content-title');
+                titles[index].innerText = title;
 
-            const titles = document.querySelectorAll('.content-title')
-            titles[index].innerText = title
+                console.log(titles);
 
-            console.log(titles)
-        
-            // const images = document.querySelectorAll('.big-image img')
-            // images[index].src = price
+                let priceElements = document.querySelectorAll('.big-image .price');
+                priceElements[index].innerText = price;
 
-            // const images = document.querySelectorAll('.big-image img')
-            // images[index].src = description
+                let descriptionElements = document.querySelectorAll('.big-image .description');
+                descriptionElements[index].innerText = description;
 
-            const images = document.querySelectorAll('.big-image img')
-            images[index].src = image  //change class to something more specific
-
+                let imageElements = document.querySelectorAll('.big-image img');
+                imageElements[index].src = image; //change class to something more specific
+            });
         })
-
-
-    })
-    .catch(err => {
-        console.log(`error ${err}`)
-    });
+        .catch(err => {
+            console.log(`error ${err}`);
+        });
 }
+
 
 window.onload = () => {
     fetchProducts()
@@ -73,51 +72,6 @@ themeToggler.onclick = () =>{
     }
 }
 
-// document.querySelectorAll('.small-image-1').forEach(images =>{
-//     images.onclick = () =>{
-//         document.querySelector('.big-image-1').src = images.getAttribute('src');
-//     }
-// });
-
-// document.querySelectorAll('.small-image-2').forEach(images =>{
-//     images.onclick = () =>{
-//         document.querySelector('.big-image-2').src = images.getAttribute('src');
-//     }
-// });
-
-// document.querySelectorAll('.small-image-3').forEach(images =>{
-//     images.onclick = () =>{
-//         document.querySelector('.big-image-3').src = images.getAttribute('src');
-//     }
-// });
-
-// let countDate = new Date('aug 1, 2021 00:00:00').getTime();
-
-// function countDown(){
-
-//     let now = new Date().getTime();
-// 	gap = countDate - now;
-
-//     let seconds = 1000;
-//     let minutes = seconds * 60;
-//     let hours = minutes * 60;
-//     let days = hours * 24;
-
-//     let d = Math.floor(gap / (days));
-// 	let h = Math.floor((gap % (days)) / (hours));
-// 	let m = Math.floor((gap % (hours)) / (minutes));
-// 	let s = Math.floor((gap % (minutes)) / (seconds));
-
-//     document.getElementById('days').innerText = d;
-//     document.getElementById('hours').innerText = h;
-//     document.getElementById('minutes').innerText = m;
-//     document.getElementById('seconds').innerText = s;
-
-// }
-
-setInterval(function(){
-    countDown()
-},1000);
 
 var swiper = new Swiper(".product-slider", {
     slidesPerView: 3,
@@ -170,3 +124,31 @@ var swiper = new Swiper(".review-slider", {
         },
     },
 });
+
+const addToCartBtns = document.querySelectorAll('.btn-add-to-cart');
+const cartNumber = document.querySelector('.header-checkout');
+
+console.log(cartNumber);
+
+addToCartBtns.forEach(btn => {
+	const productId = btn.dataset.productId;
+
+	btn.addEventListener('click', () => {
+		fetch(`api/add/${productId}`)
+			.then(res => res.json())
+			.then(res => {
+				if (res.status === 404) {
+					console.error(res.message);
+				} else {
+					console.log(res);
+					cartNumber.dataset.numItems++;
+
+					// do a little animation to show something was added to the cart.
+					cartNumber.classList.add('pulse-number');
+					setTimeout(() => {
+						cartNumber.classList.remove('pulse-number');
+					}, 500);
+				}
+			})
+	});
+})

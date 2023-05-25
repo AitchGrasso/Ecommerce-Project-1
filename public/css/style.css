@@ -205,7 +205,7 @@ header .icons div:hover,
 header .icons a:hover{
     background: var(--orange);
     color:#fff;
-    
+    transform: rotate(360deg);
 }
 
 header.active{
@@ -345,7 +345,7 @@ header.active{
 
 
 .home{
-    min-height: 20vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     flex-wrap: wrap-reverse;
@@ -357,7 +357,6 @@ header.active{
 
 .home .content{
     flex:1 1 40rem;
-    
 }
 
 .home .image{
@@ -378,7 +377,6 @@ header.active{
     color:var(--black-color);
     font-size: 8rem;
     text-transform: uppercase;
-    
 }
 
 .category .box-container{
@@ -391,7 +389,6 @@ header.active{
     height: 30rem;
     flex:1 1 40rem;
     border-radius: .5rem;
-    display: flex;
     position: relative;
     overflow:hidden;
 }
@@ -408,7 +405,7 @@ header.active{
 
 .category .box-container .content{
     position: absolute;
-    bottom: 1rem; left:1rem;
+    bottom: 7rem; left:2rem;
 }
 
 .category .box-container .content span{
@@ -418,9 +415,7 @@ header.active{
 
 .category .box-container .content h3{
     font-size: 3rem;
-    color:rgb(123, 121, 121);
-   
-    
+    color:#3337;
     text-transform: uppercase;
     padding-top: .5rem;
 }

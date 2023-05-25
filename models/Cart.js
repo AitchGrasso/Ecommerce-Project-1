@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model('Todo', TodoSchema)
-
 const CartSchema = new mongoose.Schema(
   {
     userId: {
