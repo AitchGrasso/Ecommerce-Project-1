@@ -1,5 +1,7 @@
 let navbar = document.querySelector('.navbar')
 
+fetchProducts()
+
 document.querySelector('#menu-bar').onclick = () =>{
     navbar.classList.toggle('active');
 }
@@ -8,43 +10,40 @@ document.querySelector('#close').onclick = () =>{
     navbar.classList.remove('active');
 }
 
-function fetchProducts(){
-    fetch('https://fakestoreapi.com/products/category/electronic?limit=3%27')
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data)
+function fetchProducts() {
+    fetch('https://fakestoreapi.com/products/category/electronics?limit=3')
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
 
-        data.forEach((obj, index) => {
+            data.forEach((obj, index) => {
+                let {
+                    title,
+                    price,
+                    description,
+                    image
+                } = obj;
 
-            const {
-                title,
-                price,
-                description,
-                image
-            } = obj
+                let titles = document.querySelectorAll('.content-title');
+                titles[index].innerText = title;
 
-            const titles = document.querySelectorAll('.content-title')
-            titles[index].innerText = title
+                console.log(titles);
 
-            console.log(titles)
-        
-            // const images = document.querySelectorAll('.big-image img')
-            // images[index].src = price
+                let priceElements = document.querySelectorAll('.big-image .price');
+                priceElements[index].innerText = price;
 
-            // const images = document.querySelectorAll('.big-image img')
-            // images[index].src = description
+                let descriptionElements = document.querySelectorAll('.big-image .description');
+                descriptionElements[index].innerText = description;
 
-            const images = document.querySelectorAll('.big-image img')
-            images[index].src = image  //change class to something more specific
-
+                let imageElements = document.querySelectorAll('.big-image img');
+                imageElements[index].src = image; //change class to something more specific
+            });
         })
-
-
-    })
-    .catch(err => {
-        console.log(`error ${err}`)
-    });
+        .catch(err => {
+            console.log(`error ${err}`);
+        });
 }
+
 
 window.onload = () => {
     fetchProducts()
