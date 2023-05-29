@@ -1,19 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const cartController = require('../controllers/cart') 
-const { ensureAuth } = require('../middleware/auth')
-
-router.get('/', ensureAuth, cartController.getCart)
-
-router.post('/createCart', cartController.createCart)
-
-router.put('/markComplete', cartController.markComplete)
-
-router.put('/markIncomplete', cartController.markIncomplete)
-
-router.delete('/deleteCart', cartController.deleteCart)
-
-module.exports = router
+const cartController = require('../controllers/checkout')
 
 router.get('/products', async (req, res) => {
 	res.render('products.ejs', { products, numCartItems: getNumUserItems() });
@@ -157,3 +144,5 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) =>
 
 	res.status(200).send();
 })
+
+module.exports = router

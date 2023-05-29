@@ -8,7 +8,7 @@ const flash = require('express-flash')
 const logger = require('morgan')
 const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
-const cartRoutes = require('./routes/cart')
+const checkoutRoutes = require('./routes/checkout')
 const loginRoutes = require('./routes/login')
 require('dotenv').config({path: './config/.env'})
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
@@ -27,7 +27,6 @@ app.use('/public', express.static('public', {
 // Passport config
 require('./config/passport')(passport)
 
-// Connect to Database
 connectDB()
 
 // Using EJS for views
@@ -68,7 +67,7 @@ app.use(flash())
 
 // Setup Routes For Which The Server Is Listening
 app.use('/', mainRoutes)
-app.use('/cart', cartRoutes)
+app.use('/checkout', checkoutRoutes)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Products available for sale (loads from stripe on server startup).
