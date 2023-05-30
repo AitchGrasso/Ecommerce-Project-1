@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const flash = require('express-flash')
 const logger = require('morgan')
 const connectDB = require('./config/database')
-// const mainRoutes = require('./routes/main')
+const mainRoutes = require('./routes/main')
 // const checkoutRoutes = require('./routes/checkout')
 // const loginRoutes = require('./routes/login')
 require('dotenv').config({path: './config/.env'})
@@ -141,6 +141,16 @@ async function sendFailedPaymentEmail(session) {
 app.get('/', async (req, res) => {
 	res.render('index.ejs', { products, numCartItems: getNumUserItems() });
 }); 
+app.get('/login', async (req, res) => {
+	res.render('login.ejs', { products, numCartItems: getNumUserItems() });
+}); 
+app.get('/signup', async (req, res) => {
+	res.render('signup.ejs', { products, numCartItems: getNumUserItems() });
+}); 
+app.use('/login', mainRoutes)
+app.use('/signup', mainRoutes)
+app.post('/signup', mainRoutes)
+app.post('/login', mainRoutes)
 
 app.get('/products', async (req, res) => {
 	res.render('products.ejs', { products, numCartItems: getNumUserItems() });
