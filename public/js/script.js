@@ -36,40 +36,6 @@ document.querySelector('#close').onclick = () =>{
     navbar.classList.remove('active');
 }
 
-function fetchProducts() {
-    fetch('https://fakestoreapi.com/products/category/electronics?limit=3')
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-
-            data.forEach((obj, index) => {
-                let {
-                    title,
-                    price,
-                    description,
-                    image
-                } = obj;
-
-                let titles = document.querySelectorAll('.content-title');
-                titles[index].innerText = title;
-
-                console.log(titles);
-
-                let priceElements = document.querySelectorAll('.big-image .price');
-                priceElements[index].innerText = price;
-
-                let descriptionElements = document.querySelectorAll('.big-image .description');
-                descriptionElements[index].innerText = description;
-
-                let imageElements = document.querySelectorAll('.big-image img');
-                imageElements[index].src = image; //change class to something more specific
-            });
-        })
-        .catch(err => {
-            console.log(`error ${err}`);
-        });
-}
-
 
 window.onload = () => {
     fetchProducts()
