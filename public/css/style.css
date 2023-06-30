@@ -71,7 +71,7 @@ section{
     margin-top: 1rem;
     border-radius: 5rem;
     background: var(--black-color);
-    color:var(--white-color);
+    color: white;
     font-size: 1.8rem;
     padding:.9rem 3.5rem;
     cursor: pointer;
@@ -532,8 +532,10 @@ header.active{
 
 .featured .box-container .box .image-container{
     display: flex;
+    flex-direction: column-reverse;
     gap:1.5rem;
     align-items: center;
+    justify-content: center;
     padding:1rem;
 }
 
@@ -836,4 +838,8 @@ header.active{
         border-bottom: none;
     }
 
+}
+
+#button {
+    color: white;
 }

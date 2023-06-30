@@ -2,11 +2,15 @@ let navbar = document.querySelector('.navbar')
 const addToCartBtns = document.querySelectorAll('.btn-add-to-cart');
 const cartNumber = document.querySelector('.header-checkout');
 
+console.log('before I work')
+
 addToCartBtns.forEach(btn => {
 	const productId = btn.dataset.productId;
 
+    console.log('I work!')
+
 	btn.addEventListener('click', () => {
-		fetch(`api/add/${productId}`)
+		fetch(`checkout/api/add/${productId}`)
 			.then(res => res.json())
 			.then(res => {
 				if (res.status === 404) {
@@ -25,8 +29,7 @@ addToCartBtns.forEach(btn => {
 	});
 })
 
-
-fetchProducts()
+console.log('after I work')
 
 document.querySelector('#menu-bar').onclick = () =>{
     navbar.classList.toggle('active');
@@ -36,10 +39,6 @@ document.querySelector('#close').onclick = () =>{
     navbar.classList.remove('active');
 }
 
-
-window.onload = () => {
-    fetchProducts()
-}
 
 window.onscroll = () =>{
 
