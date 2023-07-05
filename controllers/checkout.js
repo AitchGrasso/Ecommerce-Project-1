@@ -1,4 +1,4 @@
-const {products, getProducts} = require('../models/Products');
+const {products, getProducts} = require('../models/products');
 const {userCart, getNumUserItems} = require('../models/cart');
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 

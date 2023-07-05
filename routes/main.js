@@ -3,8 +3,8 @@ const router = express.Router();
 const authController = require("../controllers/auth");
 const homeController = require("../controllers/home");
 const webhookController = require("../controllers/webhookController");
-const {userCart, getNumUserItems} = require('../models/Cart');
-const {products, getProducts} = require('../models/Products');
+const {userCart, getNumUserItems} = require('../models/cart');
+const {products, getProducts} = require('../models/products');
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 router.get("/", homeController.getIndex);
