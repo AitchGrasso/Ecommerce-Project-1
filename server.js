@@ -84,10 +84,20 @@ app.use("/", mainRoutes);
 //index, login, logout,signup,webhook, products?
 app.use("/checkout", checkoutRoutes);
 
-app.listen(PORT, () => {
-  // Load products from stripe.
-  getProducts().then((items) => products.push(...items));
-
-  console.log("app running on " + PORT);
+app.get("/producttest", (req, res) => {
+  res.json(products);
 });
 
+getProducts()
+  .then((data) => {
+    // Assign the retrieved products to the products array
+    products.push(...data);
+    console.log('Products loaded:', products);
+  })
+  .catch((error) => {
+    console.error('Error loading products:', error);
+  });
+
+app.listen(PORT, () => {
+  console.log("App running on port " + PORT);
+});
