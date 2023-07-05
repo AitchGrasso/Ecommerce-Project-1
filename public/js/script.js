@@ -7,8 +7,6 @@ console.log('before I work')
 addToCartBtns.forEach(btn => {
 	const productId = btn.dataset.productId;
 
-    console.log('I work!')
-
 	btn.addEventListener('click', () => {
 		fetch(`checkout/api/add/${productId}`)
 			.then(res => res.json())
