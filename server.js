@@ -92,7 +92,7 @@ getProducts()
   .then((data) => {
     // Assign the retrieved products to the products array
     products.push(...data);
-    console.log('Products loaded:', products);
+    // console.log('Products loaded:', products);
   })
   .catch((error) => {
     console.error('Error loading products:', error);
