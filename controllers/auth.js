@@ -4,7 +4,7 @@ const User = require('../models/User')
 
  exports.getLogin = (req, res) => {
     if (req.user) {
-      return res.redirect('/checkout')
+      return res.redirect('/')
     }
     res.render('login.ejs', {
       title: 'Login'
@@ -52,7 +52,7 @@ const User = require('../models/User')
     if (req.user) {
       return res.redirect('/')
     }
-    res.render('signup', {
+    res.render('signup.ejs', {
       title: 'Create Account'
     })
   }
@@ -101,5 +101,3 @@ exports.postSignup = async (req, res, next) => {
     next(err);
   }
 };
-
-  
