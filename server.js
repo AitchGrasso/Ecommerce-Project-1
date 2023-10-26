@@ -9,7 +9,7 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const checkoutRoutes = require("./routes/checkout");
-const { products, getProducts } = require("./models/Products");
+const { products, getProducts } = require("./models/products");
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const webhookController = require("./controllers/webhookController"); // Import the webhook controller
 
