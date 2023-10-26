@@ -4,9 +4,9 @@ const User = require('../models/User')
 
  exports.getLogin = (req, res) => {
     if (req.user) {
-      return res.redirect('/checkout')
+      return res.redirect('/')
     }
-    res.render('login.ejs', {
+    res.render('login', {
       title: 'Login'
     })
   }
