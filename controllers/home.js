@@ -1,5 +1,5 @@
 const { products, getProducts } = require('../models/Products');
-const { getNumUserItems } = require('../models/Cart');
+const { getNumUserItems } = require('../models/cart');
 
 module.exports = {
     getIndex: (req,res)=>{

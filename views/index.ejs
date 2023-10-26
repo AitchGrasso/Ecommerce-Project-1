@@ -21,28 +21,16 @@
 
     <!-- Deals Section -->
 
-    <section class="home" id="home">
-        <div class="content">
-            <span>Digital Deals</span>
-            <% if (products.length > 0) { %>
-                <h3><%= products[0].name %></h3>
-                <p><%= products[0].description %></p>
+        <section class="home" id="home">
+            <div class="content">
+                <span>Digital Deals</span>
+                <h3>Laptops<br>Up to 50% off</h3>
                 <a href="/products" class="btn">shop now</a>
-            <% } %>
-        </div>
-        <div class="image">
-            <% if (products.length > 0) { %>
-                <img src="<%= products[0].images[0] || 'https://placehold.co/600x400?text=PRODUCT%20IMAGE' %>" alt="<%= products[0].name %>">
-            <% } %>
-        </div>
-    </section>
-   
-    
-    
-    
-    
-    
-    
+            </div>
+            <div class="image">
+                <img src="images/laptop1.png" alt="">
+            </div>
+        </section>
 
     <!-- category section  -->
 
